@@ -1,0 +1,90 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset='utf-8' />
+  <title>Pittsburgh Data</title>
+  <meta name='viewport' content='initial-scale=1,maximum-scale=1,user-scalable=no' />
+  <script src='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.js'></script>
+  <link href='https://api.mapbox.com/mapbox-gl-js/v1.10.1/mapbox-gl.css' rel='stylesheet' />
+  <style>
+    body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Helvetica Neue', Helvetica, Arial, Sans-serif;
+    }
+
+    #map {
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    width: 100%;
+    }
+
+    h1 {
+    font-size: 20px;
+    line-height: 30px;
+    }
+
+    h2 {
+    font-size: 14px;
+    line-height: 20px;
+    margin-bottom: 10px;
+    }
+
+    a {
+    text-decoration: none;
+    color: #2dc4b2;
+    }
+
+    #console {
+    position: absolute;
+    width: 300px;
+    margin: 10px;
+    padding: 10px 20px;
+    background-color: white;
+    }
+  </style>
+</head>
+
+<body>
+  <div id='map'></div>
+
+  <div id='console'>
+    <h1>Data-driven Pittsburgh</h1>
+    <p>What will the future be like? Will there be flying cars? Will services, like education and street maintenance, be equitable?</p>
+    <br>
+    <p>Beta Blocks is a participatory imagination project for Boston communities to question and explore the role of data and new technologies in the places they live.</p>
+    <br>
+    <p>This application allows users to explore the hidden stories of Boston's communities in 311 data or to make a custom decision-making algorithm to determine which communities should receive public realm improvements first. Information can be very powerful but we are just learning how to effectively and equitably use it. Please join us!</p>
+  </div>
+
+  <script>
+    mapboxgl.accessToken = 'pk.eyJ1IjoiemRodWFuZyIsImEiOiJjazlwYXFlYjEwNXF5M2ltb3htaDQ2NGFiIn0.E7gXx-d4rRAyPOQ-yQlWaQ';
+    var map = new mapboxgl.Map({
+      container: 'map', // container element id
+      style: 'mapbox://styles/mapbox/light-v10',
+      center: [-79.995, 40.433], // initial map center in [lon, lat]
+      zoom: 11.73
+    });
+
+    map.on('load', function() {
+      map.addLayer({
+        id: 'collisions',
+        type: 'circle',
+        source: {
+          type: 'geojson',
+          data: './pittsburgh_parcels_centroids.geojson' // replace this with the url of your own geojson
+        }
+        ,
+        paint:{
+          'circle-radius': 1.2,
+          'circle-color': '#223b53',
+          'circle-opacity': 0.5
+        }
+      });
+    });
+  </script>
+</body>
+
+</html>
